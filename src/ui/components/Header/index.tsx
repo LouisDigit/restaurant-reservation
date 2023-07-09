@@ -4,8 +4,49 @@ import instagramIcon from "./../../../assets/LandingPage/SocialMedia/InstaIcon.s
 import facebookIcon from "./../../../assets/LandingPage/SocialMedia/FacebookIcon.svg";
 import twitterIcon from "./../../../assets/LandingPage/SocialMedia/TwitterIcon.svg";
 import pinterestIcon from "./../../../assets/LandingPage/SocialMedia/PinterestIcon.svg";
-
 const Header = () => {
+  const menuLinks = [
+    {
+      libelle: "Home",
+    },
+    {
+      libelle: "About",
+    },
+    {
+      libelle: "Menu",
+    },
+    {
+      libelle: "Reservation",
+    },
+    {
+      libelle: "Gallery",
+    },
+    {
+      libelle: "Blog",
+    },
+    {
+      libelle: "Contact",
+    },
+  ];
+
+  const socialLinks = [
+    {
+      src: facebookIcon,
+      alt: "Icone de Facebook",
+    },
+    {
+      src: instagramIcon,
+      alt: "Icone d'Instagram",
+    },
+    {
+      src: twitterIcon,
+      alt: "Icone de Twitter",
+    },
+    {
+      src: pinterestIcon,
+      alt: "Icone de Pinterest",
+    },
+  ];
   return (
     <header className=" flex flex-col w-full h-fit  pt-16 bg-darkBg">
       <div className="flex justify-between items-center px-[10%] pb-16">
@@ -22,27 +63,18 @@ const Header = () => {
       </div>
       <div className="flex justify-between border-y border-fontColor border-opacity-50 py-5">
         <ul className="flex gap-8 text-fontColor pl-[10%]">
-          <li>Home</li>
-          <li>About</li>
-          <li>Menu</li>
-          <li>Reservation</li>
-          <li>Gallery</li>
-          <li>Blog</li>
-          <li>Contact</li>
+          {menuLinks.map((link) => {
+            return <li>{link.libelle}</li>;
+          })}
         </ul>
         <ul className="flex gap-3 pr-[10%]">
-          <li>
-            <img src={instagramIcon} alt="Icone d'instagram" />
-          </li>
-          <li>
-            <img src={facebookIcon} alt="Icone de facebook" />
-          </li>
-          <li>
-            <img src={twitterIcon} alt="Icone de twitter" />
-          </li>
-          <li>
-            <img src={pinterestIcon} alt="Icone de pinterest" />
-          </li>
+          {socialLinks.map((link) => {
+            return (
+              <li>
+                <img src={link.src} alt={link.alt} />
+              </li>
+            );
+          })}
         </ul>
       </div>
     </header>
