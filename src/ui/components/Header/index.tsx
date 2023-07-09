@@ -56,22 +56,31 @@ const Header = () => {
         <img src={restaurantLogo} alt="Logo du restaurant" />
         <div className="flex gap-8">
           <img src={marketIcon} alt="Icon du market" />
-          <button className="bg-primaryColor text-darkBg px-8 py-3 h-14">
+          <button className="bg-primaryColor text-darkBg px-8 py-3 h-14 hover:bg-fontColor ease-in-out duration-300 border border-primaryColor font-serif font-medium">
             Reservation
           </button>
         </div>
       </div>
       <div className="flex justify-between border-y border-fontColor border-opacity-50 py-5">
         <ul className="flex gap-8 text-fontColor pl-[10%]">
-          {menuLinks.map((link) => {
-            return <li>{link.libelle}</li>;
+          {menuLinks.map((link, index) => {
+            return (
+              <li key={index} className="cursor-pointer hover:opacity-50">
+                {link.libelle}
+              </li>
+            );
           })}
         </ul>
-        <ul className="flex gap-3 pr-[10%]">
-          {socialLinks.map((link) => {
+        <ul className="flex gap-5 pr-[10%]">
+          {socialLinks.map((link, index) => {
             return (
               <li>
-                <img src={link.src} alt={link.alt} />
+                <img
+                  key={index}
+                  className="cursor-pointer"
+                  src={link.src}
+                  alt={link.alt}
+                />
               </li>
             );
           })}
