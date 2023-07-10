@@ -22,14 +22,14 @@ const Informations = () => {
   ];
   return (
     <section className="px-[10%] py-24 bg-infosBg">
-      <ul className="flex items-center justify-between">
+      <ul className="flex flex-col md:flex-row gap-8 md:gap-0 items-center justify-between">
         {infos.map((info, index) => {
           return (
             <li className="flex gap-3" key={index}>
               <img
                 src={info.image}
                 alt={info.title}
-                className="rounded-full bg-darkBg p-2 w-16 shadow-2xl"
+                className="rounded-full bg-darkBg p-2 w-16 h-16 shadow-2xl"
               />
               <div className="flex flex-col">
                 <h2 className="text-xl font-serif font-semibold">

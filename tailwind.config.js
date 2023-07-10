@@ -7,6 +7,8 @@ module.exports = {
       darkBg: "#292E36",
       fontColor: "#fff",
       infosBg: "#FFF8F5",
+      lightDarkBg: "#343942",
+      transparent: "rgba(0, 0, 0, 0)",
     },
     extend: {},
   },

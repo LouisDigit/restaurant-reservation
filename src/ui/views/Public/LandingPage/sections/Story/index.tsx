@@ -2,10 +2,10 @@ import StoryImage from "./../../../../../../assets/LandingPage/StoryImage.png";
 
 const Story = () => {
   return (
-    <section className="px-[10%] flex pb-16 bg-infosBg">
-      <img src={StoryImage} alt="story view" />
+    <section className="px-0 md:px-[10%] flex pb-16 bg-infosBg">
+      <img src={StoryImage} alt="story view" className="hidden md:block" />
 
-      <div className="border-l ml-16 border-opacity-50 border-darkBg flex flex-col gap-6 px-16">
+      <div className="border-l-0 md:border-l ml-0 md:ml-16 border-opacity-50 border-darkBg flex flex-col gap-6 px-5 md:px-16">
         <h2 className="text-xl font-serif font-semibold">The Story</h2>
         <p>
           Lorem Ipsum is that it has a more-or-less normal distribution of
