@@ -32,7 +32,7 @@ const Teams = () => {
         Team
       </h3>
       <h2 className="font-serif text-2xl">Meet Our Professional Chefs</h2>
-      <ul className="flex gap-3">
+      <ul className="flex flex-col md:flex-row gap-10 md:gap-3">
         {teams.map((team, index) => {
           return (
             <li key={index} className="flex flex-col items-center gap-3">

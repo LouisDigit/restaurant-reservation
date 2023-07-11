@@ -34,7 +34,7 @@ const Main = () => {
   ];
   return (
     <section className="bg-fontColor pt-24">
-      <div className="flex px-[10%]">
+      <div className="flex  flex-col md:flex-row gap-8 md:items-start items-center md:justify-normal justify-center md:gap-0 px-0 md:px-[10%]">
         <div className="w-1/2 flex flex-col justify-center gap-8">
           <h3 className="uppeercase border-t border-b border-primaryColor w-fit">
             About Us
@@ -51,12 +51,12 @@ const Main = () => {
         <img
           src={imgAboutUs}
           alt="about us exemple"
-          className="w-[700px] h-[650px]"
+          className="w-[500px] md:w-[700px] h-[450px] md:h-[650px]"
         />
       </div>
 
       <ul
-        className="w-full flex flex-row items-center justify-center gap-12 mt-8 px-[10%] py-16"
+        className="w-full hidden md:flex flex-row items-center justify-center gap-12 mt-8 px-[10%] py-16"
         style={{ backgroundImage: `url(${background})` }}
       >
         {infos.map((info, index) => {
