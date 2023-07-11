@@ -1,4 +1,3 @@
-import React from "react";
 import menuSeparator from "./../../../../assets/LandingPage/Menu/MenuSeparator.svg";
 
 interface ItemMenuProps {
@@ -15,7 +14,7 @@ const ItemMenu = ({ index, img, title, description, price }: ItemMenuProps) => {
       <img src={img} alt={title} className="w-16" />
       <div className="flex flex-col gap-3">
         <h3 className="text-lg font-serif font-semibold">{title}</h3>
-        <p className="flex flex-col  md:flex-row gap-2">
+        <p className="flex flex-col  md:flex-row gap-2  items-center ">
           {description} <img src={menuSeparator} alt="separator menu" />${price}
         </p>
       </div>

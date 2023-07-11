@@ -129,7 +129,7 @@ const Menu = () => {
                   <h3 className="text-lg font-serif font-semibold">
                     {main.title}
                   </h3>
-                  <p className="flex flex-col md:flex-row gap-2">
+                  <p className="flex flex-col md:flex-row items-center gap-2">
                     {main.description}{" "}
                     <img src={menuSeparator} alt="separator menu" />$
                     {main.price}
@@ -150,7 +150,7 @@ const Menu = () => {
                   <h3 className="text-lg font-serif font-semibold">
                     {dessert.title}
                   </h3>
-                  <p className="flex flex-col md:flex-row gap-2">
+                  <p className="flex flex-col md:flex-row gap-2  items-center ">
                     {dessert.description}{" "}
                     <img src={menuSeparator} alt="separator menu" />$
                     {dessert.price}
