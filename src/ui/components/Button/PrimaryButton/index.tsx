@@ -8,9 +8,11 @@ interface PrimaryButtonProps {
   fontColorHover?: null | string;
   borderColor?: null | string;
   borderColorHover?: null | string;
+  onClick?: () => void;
 }
 
 const PrimaryButton = ({
+  onClick,
   text,
   bgColor,
   bgColorHover,
@@ -21,6 +23,7 @@ const PrimaryButton = ({
 }: PrimaryButtonProps) => {
   return (
     <button
+      onClick={onClick}
       className={`${bgColor ? bgColor : "bg-primaryColor"} ${
         bgColorHover ? bgColorHover : "hover:bg-fontColor"
       } ${fontColor ? fontColor : "text-darkBg"} ${

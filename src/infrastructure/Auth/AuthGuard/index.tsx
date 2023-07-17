@@ -13,7 +13,7 @@ const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
   const authenticated = useAppSelector(isUserAuthenticatedSelector);
 
   if (!authenticated) {
-    return <Navigate to="/login" />;
+    return <Navigate to="/login-admin" />;
   }
   return <>{children}</>;
 };

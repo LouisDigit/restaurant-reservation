@@ -9,6 +9,7 @@ module.exports = {
       infosBg: "#FFF8F5",
       lightDarkBg: "#343942",
       transparent: "rgba(0, 0, 0, 0)",
+      error: "#e74c3c",
     },
     extend: {},
   },

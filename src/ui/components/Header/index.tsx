@@ -6,9 +6,16 @@ import twitterIcon from "./../../../assets/LandingPage/SocialMedia/TwitterIcon.s
 import pinterestIcon from "./../../../assets/LandingPage/SocialMedia/PinterestIcon.svg";
 import menuIcon from "./../../../assets/Header/menu-burger.svg";
 import PrimaryButton from "../Button/PrimaryButton";
+import { useAppSelector } from "../../../store/hooks";
+import { isUserAuthenticatedSelector } from "../../../domain/usecases/auth-slice";
+import { useAppDispatch } from "../../../store/hooks";
+import { signOut } from "../../../domain/usecases/auth-slice";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 const Header = () => {
+  const authenticated = useAppSelector(isUserAuthenticatedSelector);
+  const dispatch = useAppDispatch();
+
   const menuLinks = [
     {
       libelle: "Home",
@@ -61,6 +68,10 @@ const Header = () => {
     setShowMenu(!showMenu);
   };
 
+  const handleSignOut = () => {
+    dispatch(signOut());
+  };
+
   return (
     <header className=" flex flex-col w-full h-fit  pt-16 bg-darkBg">
       <div className="flex  flex-col md:flex-row gap-5 md:gap-0 justify-between items-center px-[10%] pb-16">
@@ -73,7 +84,7 @@ const Header = () => {
           <PrimaryButton text="Reservation" />
         </div>
       </div>
-      <div className="flex justify-end md:justify-between border-y border-fontColor md:px-0 border-opacity-50 py-5 relative">
+      <div className="flex justify-end items-center md:justify-between border-y border-fontColor md:px-0 border-opacity-50 py-5 relative">
         <ul className="hidden md:flex gap-0 md:gap-8 text-fontColor pl-[10%]">
           {menuLinks.map((link, index) => {
             return (
@@ -84,6 +95,15 @@ const Header = () => {
               </li>
             );
           })}
+          {authenticated ? (
+            <li className="cursor-pointer hover:opacity-50 ">
+              <Link to="/user/calendar" className="text-fontColor">
+                Calendrier
+              </Link>
+            </li>
+          ) : (
+            <></>
+          )}
         </ul>
         <img
           src={menuIcon}
@@ -98,16 +118,26 @@ const Header = () => {
         >
           {menuLinks.map((link, index) => {
             return (
-              <li className="w-full text-center py-2 border-t border-b border-darkBg border-opacity-30">
+              <li
+                key={index}
+                className="w-full text-center py-2 border-t border-b border-darkBg border-opacity-30"
+              >
                 <Link to={link.path}>{link.libelle}</Link>
               </li>
             );
           })}
+          {authenticated ? (
+            <li className="w-full text-center py-2 border-t border-b border-darkBg border-opacity-30">
+              <Link to={"/user/calendar"}>Calendrier</Link>
+            </li>
+          ) : (
+            <></>
+          )}
         </ul>
-        <ul className="hidden md:flex gap-0 md:gap-5 pr-[10%]">
+        <ul className="hidden items-center md:flex gap-0 md:gap-5 pr-[10%]">
           {socialLinks.map((link, index) => {
             return (
-              <li>
+              <li key={index}>
                 <img
                   key={index}
                   className="cursor-pointer"
@@ -117,6 +147,11 @@ const Header = () => {
               </li>
             );
           })}
+          {authenticated ? (
+            <PrimaryButton text={"Se déconnecter"} onClick={handleSignOut} />
+          ) : (
+            <></>
+          )}
         </ul>
       </div>
     </header>

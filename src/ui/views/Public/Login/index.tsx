@@ -17,7 +17,6 @@ import logo from "./../../../../assets/LandingPage/restaurant-logo.svg";
 const Login: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const provider = new GoogleAuthProvider();
   const authenticated = useAppSelector(isUserAuthenticatedSelector);
   const loading = useAppSelector(authLoading);
   const error = useAppSelector(authError);
@@ -90,7 +89,7 @@ const Login: React.FC = () => {
               className="flex flex-col gap-5 px-5 py-3 sm:w-full lg:w-[26rem] w-full"
             >
               {error ? (
-                <span className="text-white bg-red-500 text-center py-2 rounded-lg">
+                <span className="text-fontColor bg-error text-center py-2 rounded-lg">
                   {error.toString()}
                 </span>
               ) : (
