@@ -7,7 +7,6 @@ import PublicLayout from "./ui/views/Public/Layout";
 import Menu from "./ui/views/Public/Menu";
 import Reservation from "./ui/views/Public/Reservation";
 import Gallery from "./ui/views/Public/Gallery";
-import Blog from "./ui/views/Public/Blog";
 import Contact from "./ui/views/Public/Contact";
 
 function App() {
@@ -20,7 +19,6 @@ function App() {
           <Route path="/menu" element={<Menu />} />
           <Route path="/reservation" element={<Reservation />} />
           <Route path="/gallery" element={<Gallery />} />
-          <Route path="/blog" element={<Blog />} />
           <Route path="/contact" element={<Contact />} />
         </Route>
       </Routes>
