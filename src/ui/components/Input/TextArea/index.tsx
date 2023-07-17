@@ -1,21 +1,19 @@
-interface InputBookProps {
-  type: "text" | "date" | "number";
+interface TextAreaProps {
   name?: undefined | string;
   placeholder?: undefined | string;
   border?: "dark";
 }
 
-const InputBook = ({ type, name, placeholder, border }: InputBookProps) => {
+const TextArea = ({ name, placeholder, border }: TextAreaProps) => {
   return (
-    <input
-      type={type}
+    <textarea
       name={name}
       placeholder={placeholder}
       className={`border ${
         border ? "border-darkBg text-darkBg" : "border-fontColor text-fontColor"
-      } px-4 py-2 bg-transparent `}
+      } px-4 py-2 bg-transparent`}
     />
   );
 };
 
-export default InputBook;
+export default TextArea;

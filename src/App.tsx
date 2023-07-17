@@ -8,6 +8,7 @@ import Menu from "./ui/views/Public/Menu";
 import Reservation from "./ui/views/Public/Reservation";
 import Gallery from "./ui/views/Public/Gallery";
 import Contact from "./ui/views/Public/Contact";
+import Login from "./ui/views/Public/Login";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/reservation" element={<Reservation />} />
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/login-admin" element={<Login />} />
         </Route>
       </Routes>
       <Routes>

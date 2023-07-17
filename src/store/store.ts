@@ -1,5 +1,6 @@
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { combineReducers } from "@reduxjs/toolkit";
+import authSlice from "../domain/usecases/auth-slice";
 
-export const reducer = combineReducers({});
-
-export type RootState = ReturnType<typeof reducer>;
+export const reducer = combineReducers({
+  auth: authSlice,
+});
