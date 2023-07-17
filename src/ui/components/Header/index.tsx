@@ -31,10 +31,6 @@ const Header = () => {
       path: "/gallery",
     },
     {
-      libelle: "Blog",
-      path: "/blog",
-    },
-    {
       libelle: "Contact",
       path: "/contact",
     },

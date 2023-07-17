@@ -1,7 +1,11 @@
-import React from "react";
+import Main from "./sections/Main";
 
 const Reservation = () => {
-  return <></>;
+  return (
+    <>
+      <Main />
+    </>
+  );
 };
 
 export default Reservation;
