@@ -1,6 +1,5 @@
-import React from "react";
-
 interface PrimaryButtonProps {
+  type?: "button" | "submit" | "reset" | undefined;
   text: null | string;
   bgColor?: null | string;
   bgColorHover?: null | string;
@@ -13,6 +12,7 @@ interface PrimaryButtonProps {
 
 const PrimaryButton = ({
   onClick,
+  type,
   text,
   bgColor,
   bgColorHover,
@@ -23,6 +23,7 @@ const PrimaryButton = ({
 }: PrimaryButtonProps) => {
   return (
     <button
+      type={type}
       onClick={onClick}
       className={`${bgColor ? bgColor : "bg-primaryColor"} ${
         bgColorHover ? bgColorHover : "hover:bg-fontColor"

@@ -110,7 +110,7 @@ const Menu = () => {
           {starters.map((starter, index) => {
             return (
               <ItemMenu
-                index={index}
+                key={index}
                 img={starter.img}
                 title={starter.title}
                 description={starter.description}

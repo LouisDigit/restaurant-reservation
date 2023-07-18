@@ -84,6 +84,7 @@ const Header = () => {
           <PrimaryButton text="Reservation" />
         </div>
       </div>
+
       <div className="flex justify-end items-center md:justify-between border-y border-fontColor md:px-0 border-opacity-50 py-5 relative">
         <ul className="hidden md:flex gap-0 md:gap-8 text-fontColor pl-[10%]">
           {menuLinks.map((link, index) => {
@@ -97,7 +98,7 @@ const Header = () => {
           })}
           {authenticated ? (
             <li className="cursor-pointer hover:opacity-50 ">
-              <Link to="/user/calendar" className="text-fontColor">
+              <Link to="/user/scheduler" className="text-fontColor">
                 Calendrier
               </Link>
             </li>
@@ -128,7 +129,7 @@ const Header = () => {
           })}
           {authenticated ? (
             <li className="w-full text-center py-2 border-t border-b border-darkBg border-opacity-30">
-              <Link to={"/user/calendar"}>Calendrier</Link>
+              <Link to={"/user/scheduler"}>Calendrier</Link>
             </li>
           ) : (
             <></>

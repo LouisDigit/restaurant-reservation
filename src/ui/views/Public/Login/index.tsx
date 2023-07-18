@@ -67,7 +67,7 @@ const Login: React.FC = () => {
 
   return (
     <>
-      <section className="w-full h-screen bg-cover flex justify-center items-center bg-white">
+      <section className="w-full py-16 bg-cover flex justify-center items-center bg-white">
         {loading ? (
           <div className="loader-content">
             <div className="spinner"></div>
@@ -116,19 +116,12 @@ const Login: React.FC = () => {
                   name="password"
                   required={true}
                 />
-                <Link
-                  to="/forgotPassword"
-                  className="text-blue-500 self-end mt-2  hover:text-blue-600  w-fit text-sm"
-                >
-                  Forgot password?
-                </Link>
               </div>
 
               <SecondaryButton
                 text="Sign In"
                 type="submit"
                 disabled={enabledButton}
-                cssClass="rounded-lg"
               />
             </form>
           </div>

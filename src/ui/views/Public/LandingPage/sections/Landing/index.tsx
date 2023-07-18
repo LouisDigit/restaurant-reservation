@@ -1,5 +1,3 @@
-import React from "react";
-import Header from "../../../../../components/Header";
 import landingImage from "./../../../../../../assets/LandingPage/RestaurantView.png";
 import PrimaryButton from "../../../../../components/Button/PrimaryButton";
 

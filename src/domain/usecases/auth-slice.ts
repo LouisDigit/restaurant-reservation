@@ -91,7 +91,6 @@ export const authSlice = createSlice({
     });
     builder.addCase(signIn.rejected, (state, action) => {
       state.errors = "Connexion failed try again";
-      console.log(action.error);
       state.loading = false;
       state.authenticated = false;
     });

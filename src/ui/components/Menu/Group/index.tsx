@@ -23,7 +23,7 @@ const GroupMenu = ({ mainImage, itemList }: GroupMenuProps) => {
           {itemList.map((starter, index) => {
             return (
               <ItemMenu
-                index={index}
+                key={index}
                 img={starter.img}
                 title={starter.title}
                 description={starter.description}
