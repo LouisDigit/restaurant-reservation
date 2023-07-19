@@ -45,6 +45,7 @@ export const addSchedule = createAsyncThunk(
         date: newDate,
         amount: req.amount,
       });
+      return req.name;
     } catch (error: any) {
       console.log(error);
       return thunkAPI.rejectWithValue({ error: error.message });
@@ -56,21 +57,24 @@ export const setScheduleDay = createAsyncThunk(
   "setScheduleDay",
   async (req: Date, thunkAPI) => {
     try {
-      const dateToMatch = req;
-      dateToMatch.setHours(0, 0, 0, 0);
+      const targetDate = req; // Date cible
 
-      // Créez une requête avec la clause where pour filtrer par date
-      const queryDay = query(
-        collection(db, "schedule"),
-        where("date", ">=", dateToMatch),
-        where(
-          "date",
-          "<",
-          new Date(dateToMatch.getTime() + 24 * 60 * 60 * 1000)
-        )
+      // Définir la date cible au début de la journée en ignorant l'heure
+      targetDate.setHours(0, 0, 0, 0);
+
+      // Définir la date cible à la fin de la journée en ignorant l'heure
+      const endOfTargetDate = new Date(targetDate);
+      endOfTargetDate.setHours(23, 59, 59, 999);
+
+      // Créer une requête avec la clause where pour filtrer par date
+      const queryDate = query(
+        collection(db, "schedule"), // Remplacez "votre_collection" par le nom de votre collection Firestore
+        where("date", ">=", targetDate),
+        where("date", "<=", endOfTargetDate)
       );
 
-      const scheduleDayQuery = await getDocs(queryDay);
+      // Exécuter la requête
+      const scheduleDayQuery = await getDocs(queryDate);
 
       let arraySchedule: ScheduleState[] = [];
       scheduleDayQuery.forEach((doc) => {
@@ -80,6 +84,10 @@ export const setScheduleDay = createAsyncThunk(
           amount: doc.data().amount,
         };
         arraySchedule = arraySchedule.concat(newValue);
+      });
+      console.log({
+        listSchedule: arraySchedule,
+        date: req,
       });
       return {
         listSchedule: arraySchedule,
@@ -125,8 +133,8 @@ export const scheduleDaySlice = createSlice({
     builder.addCase(addSchedule.pending, (state, _) => {
       state.loading = true;
     });
-    builder.addCase(addSchedule.fulfilled, (state, _) => {
-      state.success = "Réservation effectué avec succès.";
+    builder.addCase(addSchedule.fulfilled, (state, action) => {
+      state.success = "Réservation effectué au nom de " + action.payload;
       state.loading = false;
     });
     builder.addCase(addSchedule.rejected, (state, _) => {
@@ -172,6 +180,13 @@ export const scheduleDaySuccess = createSelector(
   scheduleDaySelector,
   (scheduleDay) => {
     return scheduleDay.success;
+  }
+);
+
+export const scheduleDayError = createSelector(
+  scheduleDaySelector,
+  (scheduleDay) => {
+    return scheduleDay.error;
   }
 );
 

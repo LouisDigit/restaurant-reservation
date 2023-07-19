@@ -9,13 +9,15 @@ import {
   scheduleDayLoading,
 } from "../../../../../../domain/usecases/schedule-slice";
 import { scheduleDaySuccess } from "../../../../../../domain/usecases/schedule-slice";
+import { scheduleDayError } from "../../../../../../domain/usecases/schedule-slice";
 
 const Book = () => {
   const dispatch = useAppDispatch();
   const scheduleLoad = useAppSelector(scheduleDayLoading);
   const scheduleSuccess = useAppSelector(scheduleDaySuccess);
+  const scheduleError = useAppSelector(scheduleDayError);
 
-  useEffect(() => {}, [scheduleLoad, scheduleSuccess]);
+  useEffect(() => {}, [scheduleLoad, scheduleSuccess, scheduleError]);
 
   const [bookCredential, setBookCredential] = useState<BookCredential>({
     name: "",
@@ -59,8 +61,15 @@ const Book = () => {
               Reservation
             </h3>
             {scheduleSuccess ? (
-              <p className="text-white rounded-lg w-fit px-5 py-2 textcenter bg-success">
+              <p className="text-white rounded-lg w-fit px-5 py-2 text-center bg-success">
                 {scheduleSuccess}
+              </p>
+            ) : (
+              <></>
+            )}
+            {scheduleError ? (
+              <p className="text-white rounded-lg w-fit px-5 py-2 text-center bg-error">
+                {scheduleError}
               </p>
             ) : (
               <></>
