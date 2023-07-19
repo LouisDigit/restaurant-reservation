@@ -8,6 +8,7 @@ import Gallery from "../../ui/views/Public/Gallery";
 import Contact from "../../ui/views/Public/Contact";
 import Login from "../../ui/views/Public/Login";
 import Error from "../../ui/views/Public/Error";
+import Reserved from "../../ui/views/Public/Reserved";
 
 const PublicRouter = () => {
   return (
@@ -20,6 +21,7 @@ const PublicRouter = () => {
         <Route path="/gallery" element={<Gallery />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/login-admin" element={<Login />} />
+        <Route path="/reserved" element={<Reserved />} />
         <Route path="*" element={<Error />} />
       </Route>
     </Routes>

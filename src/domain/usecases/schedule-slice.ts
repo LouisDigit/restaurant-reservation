@@ -20,7 +20,7 @@ const initialState: ScheduleDayState = {
   loading: false,
   error: null,
   showPopup: false,
-  success: "",
+  success: null,
 };
 
 export const addSchedule = createAsyncThunk(
@@ -47,7 +47,6 @@ export const addSchedule = createAsyncThunk(
       });
       return req.name;
     } catch (error: any) {
-      console.log(error);
       return thunkAPI.rejectWithValue({ error: error.message });
     }
   }
@@ -109,6 +108,9 @@ export const scheduleDaySlice = createSlice({
       state.listSchedule = [];
       state.loading = false;
       state.showPopup = false;
+    },
+    resetSuccess: (state) => {
+      state.success = null;
     },
   },
   extraReducers: (builder) => {
@@ -190,6 +192,6 @@ export const scheduleDayError = createSelector(
   }
 );
 
-export const { disabledPopup } = scheduleDaySlice.actions;
+export const { disabledPopup, resetSuccess } = scheduleDaySlice.actions;
 
 export default scheduleDaySlice.reducer;

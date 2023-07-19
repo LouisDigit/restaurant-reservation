@@ -4,7 +4,7 @@ export interface ScheduleDayState {
   loading: boolean;
   error: null | string;
   showPopup: boolean;
-  success: string;
+  success: string | null;
 }
 
 export interface ScheduleState {

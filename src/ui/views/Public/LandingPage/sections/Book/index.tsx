@@ -10,14 +10,20 @@ import {
 } from "../../../../../../domain/usecases/schedule-slice";
 import { scheduleDaySuccess } from "../../../../../../domain/usecases/schedule-slice";
 import { scheduleDayError } from "../../../../../../domain/usecases/schedule-slice";
+import { useNavigate } from "react-router-dom";
 
 const Book = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const scheduleLoad = useAppSelector(scheduleDayLoading);
   const scheduleSuccess = useAppSelector(scheduleDaySuccess);
   const scheduleError = useAppSelector(scheduleDayError);
 
-  useEffect(() => {}, [scheduleLoad, scheduleSuccess, scheduleError]);
+  useEffect(() => {
+    if (scheduleSuccess) {
+      navigate("/reserved");
+    }
+  }, [scheduleLoad, scheduleSuccess, scheduleError]);
 
   const [bookCredential, setBookCredential] = useState<BookCredential>({
     name: "",
@@ -60,13 +66,6 @@ const Book = () => {
             <h3 className="uppeercase border-t border-b border-primaryColor w-fit ">
               Reservation
             </h3>
-            {scheduleSuccess ? (
-              <p className="text-white rounded-lg w-fit px-5 py-2 text-center bg-success">
-                {scheduleSuccess}
-              </p>
-            ) : (
-              <></>
-            )}
             {scheduleError ? (
               <p className="text-white rounded-lg w-fit px-5 py-2 text-center bg-error">
                 {scheduleError}
