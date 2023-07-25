@@ -3,16 +3,15 @@ import Input from "../../../components/Input/Input";
 import { LoginCredentials } from "../../../../domain/entities/auth-types";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { auth } from "../../../..";
 import { useAppDispatch } from "../../../../store/hooks";
 import { useAppSelector } from "../../../../store/hooks";
-import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { signIn } from "../../../../domain/usecases/auth-slice";
 import { isUserAuthenticatedSelector } from "../../../../domain/usecases/auth-slice";
 import { authLoading } from "../../../../domain/usecases/auth-slice";
 import { authError } from "../../../../domain/usecases/auth-slice";
 import SecondaryButton from "../../../components/Button/SecondaryButton";
 import logo from "./../../../../assets/LandingPage/restaurant-logo.svg";
+import ErrorMessage from "../../../components/ErrorMessage";
 
 const Login: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -88,13 +87,7 @@ const Login: React.FC = () => {
               onSubmit={handleSubmit}
               className="flex flex-col gap-5 px-5 py-3 sm:w-full lg:w-[26rem] w-full"
             >
-              {error ? (
-                <span className="text-fontColor bg-error text-center py-2 rounded-lg">
-                  {error.toString()}
-                </span>
-              ) : (
-                <></>
-              )}
+              {error ? <ErrorMessage text={error.toString()} /> : <></>}
               <Input
                 type="email"
                 id="email"

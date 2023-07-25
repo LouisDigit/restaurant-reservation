@@ -12,9 +12,11 @@ import { useAppDispatch } from "../../../store/hooks";
 import { signOut } from "../../../domain/usecases/auth-slice";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 const Header = () => {
   const authenticated = useAppSelector(isUserAuthenticatedSelector);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const menuLinks = [
     {
@@ -68,6 +70,14 @@ const Header = () => {
     setShowMenu(!showMenu);
   };
 
+  const handleReservation = () => {
+    navigate("/reservation");
+  };
+
+  const handleSchedule = () => {
+    navigate("/reservation");
+  };
+
   const handleSignOut = () => {
     dispatch(signOut());
   };
@@ -81,7 +91,7 @@ const Header = () => {
         <img src={restaurantLogo} alt="Logo du restaurant" />
         <div className="flex gap-8">
           <img src={marketIcon} alt="Icon du market" />
-          <PrimaryButton text="Reservation" />
+          <PrimaryButton text="Reservation" onClick={handleReservation} />
         </div>
       </div>
 

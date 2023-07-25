@@ -10,7 +10,15 @@ import {
 } from "../entities/schedule-types";
 import { RootState } from "../..";
 import { PayloadAction } from "@reduxjs/toolkit";
-import { getDocs, query, where, setDoc, doc, addDoc } from "firebase/firestore";
+import {
+  getDocs,
+  query,
+  where,
+  setDoc,
+  doc,
+  addDoc,
+  deleteDoc,
+} from "firebase/firestore";
 import { db } from "../..";
 import { collection } from "firebase/firestore";
 
@@ -27,22 +35,20 @@ export const addSchedule = createAsyncThunk(
   "addSchedule",
   async (req: BookCredential, thunkAPI) => {
     try {
-      // Get the date
-      const year = req.date.getFullYear();
-      const month = req.date.getMonth();
-      const day = req.date.getDay();
-
-      // Get the timing
-      const hours = parseInt(req.timing.slice(0, 2), 10);
-      const minutes = parseInt(req.timing.slice(-2), 10);
-
       // Create a new Date Object
-      const newDate = new Date(year, month, day, hours, minutes);
+      // Obtenir les parties jour, mois et année de la date
+      const day = req.date.getDate().toString().padStart(2, "0"); // padStart ajoute un 0 devant si nécessaire
+      const month = (req.date.getMonth() + 1).toString().padStart(2, "0"); // Les mois sont indexés à partir de 0, donc on ajoute 1
+      const year = req.date.getFullYear();
+
+      // Concaténer les parties dans le format "dd/mm/yyyy"
+      const firebaseDate = `${day}/${month}/${year}`;
 
       // Add new document in Firebase Store
       await addDoc(collection(db, "schedule"), {
         name: req.name,
-        date: newDate,
+        date: firebaseDate,
+        time: req.timing,
         amount: req.amount,
       });
       return req.name;
@@ -52,46 +58,55 @@ export const addSchedule = createAsyncThunk(
   }
 );
 
-export const setScheduleDay = createAsyncThunk(
+export const getScheduleDay = createAsyncThunk(
   "setScheduleDay",
   async (req: Date, thunkAPI) => {
     try {
-      const targetDate = req; // Date cible
+      const day = req.getDate().toString().padStart(2, "0"); // padStart ajoute un 0 devant si nécessaire
+      const month = (req.getMonth() + 1).toString().padStart(2, "0"); // Les mois sont indexés à partir de 0, donc on ajoute 1
+      const year = req.getFullYear();
 
-      // Définir la date cible au début de la journée en ignorant l'heure
-      targetDate.setHours(0, 0, 0, 0);
+      // Concaténer les parties dans le format "dd/mm/yyyy"
+      const targetDate = `${day}/${month}/${year}`; // Date cible
 
-      // Définir la date cible à la fin de la journée en ignorant l'heure
-      const endOfTargetDate = new Date(targetDate);
-      endOfTargetDate.setHours(23, 59, 59, 999);
-
-      // Créer une requête avec la clause where pour filtrer par date
+      // // Créer une requête avec la clause where pour filtrer par date
       const queryDate = query(
-        collection(db, "schedule"), // Remplacez "votre_collection" par le nom de votre collection Firestore
-        where("date", ">=", targetDate),
-        where("date", "<=", endOfTargetDate)
+        collection(db, "schedule"),
+        where("date", "==", targetDate)
       );
 
-      // Exécuter la requête
+      // // Exécuter la requête
       const scheduleDayQuery = await getDocs(queryDate);
 
       let arraySchedule: ScheduleState[] = [];
       scheduleDayQuery.forEach((doc) => {
         const newValue = {
           name: doc.data().name,
-          dateTime: doc.data().date,
+          date: doc.data().date,
           amount: doc.data().amount,
+          time: doc.data().time,
+          id: doc.id,
         };
         arraySchedule = arraySchedule.concat(newValue);
       });
-      console.log({
-        listSchedule: arraySchedule,
-        date: req,
-      });
+
       return {
         listSchedule: arraySchedule,
         date: req,
       };
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue({ error: error.message });
+    }
+  }
+);
+
+export const deleteSchedule = createAsyncThunk(
+  "deleteSchedule",
+  async (req: string, thunkAPI) => {
+    try {
+      console.log(req);
+      const docRef = doc(db, "schedule", req); // Remplacez "votre_collection" par le nom de votre collection Firestore et docId par l'ID du document que vous souhaitez supprimer
+      await deleteDoc(docRef);
     } catch (error: any) {
       return thunkAPI.rejectWithValue({ error: error.message });
     }
@@ -114,18 +129,18 @@ export const scheduleDaySlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(setScheduleDay.pending, (state, _) => {
+    builder.addCase(getScheduleDay.pending, (state, _) => {
       state.loading = true;
       state.showPopup = false;
     });
-    builder.addCase(setScheduleDay.fulfilled, (state, action) => {
+    builder.addCase(getScheduleDay.fulfilled, (state, action) => {
       state.loading = false;
       state.error = null;
       state.listSchedule = action.payload.listSchedule;
-      state.date = action.payload.date.toISOString();
+      state.date = action.payload.date;
       state.showPopup = true;
     });
-    builder.addCase(setScheduleDay.rejected, (state, _) => {
+    builder.addCase(getScheduleDay.rejected, (state, _) => {
       state.loading = false;
       state.error = "An error has occured";
       state.listSchedule = [];
@@ -142,6 +157,14 @@ export const scheduleDaySlice = createSlice({
     builder.addCase(addSchedule.rejected, (state, _) => {
       state.loading = false;
       state.error = "An error has occured";
+    });
+    builder.addCase(deleteSchedule.pending, (state, _) => {
+      state.loading = true;
+      state.showPopup = false;
+    });
+    builder.addCase(deleteSchedule.fulfilled, (state, _) => {
+      state.loading = false;
+      state.success = "Suppression de la reservation confirmé.";
     });
   },
 });

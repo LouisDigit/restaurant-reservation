@@ -1,22 +1,10 @@
-import { Dispatch, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import {
-  PayloadAction,
-  SerializedError,
-  createSelector,
-} from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createSelector } from "@reduxjs/toolkit";
 import { User } from "../entities/user-types";
-import { updateProfile } from "firebase/auth";
 import { RootState } from "../..";
-import {
-  AuthState,
-  LoginCredentials,
-  RegisterCredentials,
-} from "../entities/auth-types";
+import { AuthState, LoginCredentials } from "../entities/auth-types";
 import { auth } from "../..";
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import authService from "../../infrastructure/Auth";
 
 export const checkUserStatus = createAsyncThunk("auth/checkAuth", () => {
@@ -49,8 +37,6 @@ export const signOut = createAsyncThunk("signOut", async (_, thunkAPI) => {
     return thunkAPI.rejectWithValue({ error: error.message });
   }
 });
-
-// export const handleRegister = createAsyncThunk()
 
 const initialState: AuthState = {
   user: null,

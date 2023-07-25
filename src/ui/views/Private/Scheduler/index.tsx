@@ -8,40 +8,20 @@ import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
 import {
   disabledPopup,
   scheduleDayShowPopup,
-  setScheduleDay,
+  getScheduleDay,
+  scheduleDaySuccess,
 } from "../../../../domain/usecases/schedule-slice";
+import SuccessMessage from "../../../components/SuccessMessage";
 
 function Scheduler() {
   const dispatch = useAppDispatch();
   const showPopup = useAppSelector(scheduleDayShowPopup);
+  const success = useAppSelector(scheduleDaySuccess);
 
-  useEffect(() => {}, [showPopup]);
-
-  const events: object[] = [
-    { title: "Midi : 15", date: "2023-07-18" },
-    { title: "Soir : 4", date: "2023-07-18" },
-  ];
-
-  const schedules = [
-    {
-      name: "Client 1",
-      dateTime: new Date("2023-07-18"),
-      amount: 1,
-    },
-    {
-      name: "Client 2",
-      dateTime: new Date("2023-07-18"),
-      amount: 1,
-    },
-    {
-      name: "Client 3",
-      dateTime: new Date("2023-07-18"),
-      amount: 1,
-    },
-  ];
+  useEffect(() => {}, [showPopup, success]);
 
   const handleDateClick = (arg: any) => {
-    dispatch(setScheduleDay(arg.date));
+    dispatch(getScheduleDay(arg.date));
   };
 
   const closePopup = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -50,30 +30,12 @@ function Scheduler() {
     }
   };
 
-  const listReservation = [
-    {
-      name: "Client 1",
-      date: "2023-07-18T12:00:00",
-      number: 2,
-    },
-    {
-      name: "Client 2",
-      date: "2023-07-18T12:30:00",
-      number: 2,
-    },
-    {
-      name: "Client 3",
-      date: "2023-07-18T12:45:00",
-      number: 2,
-    },
-  ];
-
   return (
     <section className="px-[10%] py-16">
+      {success ? <SuccessMessage text={success} /> : <></>}
       <Fullcalendar
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         initialView={"dayGridMonth"}
-        events={events}
         dateClick={handleDateClick}
         headerToolbar={{
           start: "today prev,next", // will normally be on the left. if RTL, will be on the right

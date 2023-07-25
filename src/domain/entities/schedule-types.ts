@@ -9,8 +9,10 @@ export interface ScheduleDayState {
 
 export interface ScheduleState {
   name: string;
-  dateTime: Date;
+  date: string;
   amount: number;
+  time: string;
+  id: string;
 }
 
 export interface BookCredential {

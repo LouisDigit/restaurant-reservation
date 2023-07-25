@@ -1,7 +1,12 @@
-import { scheduleDayData } from "../../../domain/usecases/schedule-slice";
+import {
+  deleteSchedule,
+  scheduleDayData,
+} from "../../../domain/usecases/schedule-slice";
 import { useAppSelector } from "../../../store/hooks";
 import PrimaryButton from "../Button/PrimaryButton";
 import { scheduleDayShowPopup } from "../../../domain/usecases/schedule-slice";
+import { useAppDispatch } from "../../../store/hooks";
+import ErrorMessage from "../ErrorMessage";
 
 interface PopupScheduleProps {
   closePopup: (event: React.MouseEvent<HTMLDivElement>) => void;
@@ -10,6 +15,12 @@ interface PopupScheduleProps {
 const PopupSchedule = ({ closePopup }: PopupScheduleProps) => {
   const schedulesData = useAppSelector(scheduleDayData);
   const showPopup = useAppSelector(scheduleDayShowPopup);
+  const dispatch = useAppDispatch();
+
+  const handleDeleteSchedule = (id: string) => {
+    dispatch(deleteSchedule(id));
+  };
+
   return (
     <>
       <div
@@ -21,32 +32,44 @@ const PopupSchedule = ({ closePopup }: PopupScheduleProps) => {
         <div className="bg-infosBg px-5 py-3">
           <table className="border-separate border-spacing-2">
             <thead>
-              <tr>
-                <th>Nom</th>
-                <th>Date</th>
-                <th>Nombre</th>
-                <th>Action</th>
-              </tr>
+              {schedulesData.length ? (
+                <tr>
+                  <th>Nom</th>
+                  <th>Date</th>
+                  <th>Heure</th>
+                  <th>Nombre</th>
+                  <th>Action</th>
+                </tr>
+              ) : (
+                <></>
+              )}
             </thead>
-            {schedulesData ? (
-              schedulesData.map((schedule, index) => {
-                return (
-                  <tr key={index}>
-                    <td className="text-center">{schedule.name}</td>
-                    <td className="text-center">
-                      {schedule.dateTime.toString()}
-                    </td>
-                    <td className="text-center">{schedule.amount}</td>
-                    <td className="text-center">
-                      <PrimaryButton text="Supprimer" />
-                    </td>
-                  </tr>
-                );
-              })
-            ) : (
-              <li>Aucune réservation pour ce jour</li>
-            )}
-            <tbody></tbody>
+            <tbody>
+              {schedulesData.length ? (
+                schedulesData.map((schedule, index) => {
+                  return (
+                    <tr key={index}>
+                      <td className="text-center">{schedule.name}</td>
+                      <td className="text-center">{schedule.date}</td>
+                      <td className="text-center">{schedule.time}</td>
+                      <td className="text-center">{schedule.amount}</td>
+                      <td className="text-center">
+                        <PrimaryButton
+                          text="Supprimer"
+                          onClick={() => handleDeleteSchedule(schedule.id)}
+                        />
+                      </td>
+                    </tr>
+                  );
+                })
+              ) : (
+                <tr>
+                  <td>
+                    <ErrorMessage text="Aucune réservation à ce jour." />
+                  </td>
+                </tr>
+              )}
+            </tbody>
           </table>
         </div>
       </div>
